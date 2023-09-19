@@ -1,6 +1,0 @@
-import {Provider} from "react-redux";
-import { fetchCharacters } from '../../redux/actions';
-
-<Provider store={store}>
-  
-</Provider>,
