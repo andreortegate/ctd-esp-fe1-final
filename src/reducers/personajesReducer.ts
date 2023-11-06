@@ -5,7 +5,7 @@ import {
   Reducer
 } from "@reduxjs/toolkit";
 //import { CharacterActions } from "../actions/personajesActions";
-import { buscarPersonajesAPI } from "../services/personaje.services";
+import { obtenerTodosPersonajesAPI } from "../services/personaje.services";
 import Personaje from "../types/personaje.types";
 
 export interface PersonajesState {
@@ -24,7 +24,7 @@ export const fetchCharactersThunk = createAsyncThunk(
   "personajes/fetchThunk",
   async (query: string) => {
     try {
-      const personajes: Personaje[] = await buscarPersonajesAPI(query);
+      const personajes: Personaje[] = await obtenerTodosPersonajesAPI(query);
       return personajes;
     } catch (e) {
       return e;

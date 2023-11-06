@@ -1,3 +1,4 @@
+// personaje.types.ts
 interface Personaje {
     id: number;
     name: string;
@@ -5,6 +6,7 @@ interface Personaje {
     image: string;
     species: string;
     episode: string[];
-}
-
-export default Personaje;
+  }
+  
+  export default Personaje;
+  

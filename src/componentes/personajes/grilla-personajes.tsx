@@ -1,20 +1,30 @@
-import React from 'react';
+// grilla-personajes.tsx
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './grilla-personajes.css';
+import { obtenerTodosPersonajesThunk } from '../../slices/personajesSlice'; // Ajusta la ruta según tu estructura de carpetas
 import TarjetaPersonaje from './tarjeta-personaje';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-/**
- * Grilla de personajes para la página de inicio
- * 
- * Deberás agregar las funciones necesarias para mostrar y paginar los personajes
- * 
- * @returns un JSX element 
- */
 const GrillaPersonajes: React.FC = () => {
+  const dispatch = useDispatch();
+  const characters = useSelector((state: any) => state.personajes.characters);
+
+  useEffect(() => {
+    // Aquí está la corrección, asegúrate de usar el thunk directamente sin ejecutarlo
+    dispatch(obtenerTodosPersonajesThunk()); 
+  }, [dispatch]);
+
   return (
     <div className="grilla-personajes">
-      <TarjetaPersonaje nombre="Rick Sanchez" imagenSrc="https://rickandmortyapi.com/api/character/avatar/1.jpeg" esFavorito={false} />
-      <TarjetaPersonaje nombre="Morty Smith" imagenSrc="https://rickandmortyapi.com/api/character/avatar/2.jpeg" esFavorito={true} />
-      <TarjetaPersonaje nombre="Summer Smith" imagenSrc="https://rickandmortyapi.com/api/character/avatar/3.jpeg" esFavorito={false} />
+      {characters.map((personaje: any) => (
+        <TarjetaPersonaje
+          key={personaje.id}
+          nombre={personaje.name}
+          imagenSrc={personaje.image}
+          esFavorito={false}
+        />
+      ))}
     </div>
   );
 }

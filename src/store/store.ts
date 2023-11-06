@@ -1,6 +1,7 @@
 import personajesReducer from "../reducers/personajesReducer";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
+import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
+
 
 const store = configureStore({
   reducer: {
