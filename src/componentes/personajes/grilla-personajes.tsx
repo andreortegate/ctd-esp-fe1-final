@@ -1,14 +1,15 @@
 // grilla-personajes.tsx
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
+ // Ajusta la ruta según tu estructura de carpetas
 import './grilla-personajes.css';
-import { obtenerTodosPersonajesThunk } from '../../slices/personajesSlice'; // Ajusta la ruta según tu estructura de carpetas
 import TarjetaPersonaje from './tarjeta-personaje';
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { obtenerTodosPersonajesThunk } from '../../slices/thunks';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 
 const GrillaPersonajes: React.FC = () => {
-  const dispatch = useDispatch();
-  const characters = useSelector((state: any) => state.personajes.characters);
+  const dispatch = useAppDispatch();
+  const characters = useAppSelector((state: any) => state.personajes.characters);
 
   useEffect(() => {
     // Aquí está la corrección, asegúrate de usar el thunk directamente sin ejecutarlo

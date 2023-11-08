@@ -1,11 +1,11 @@
-import personajesReducer from "../reducers/personajesReducer";
+import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
+import characterReducer from '../slices/personajesSlice';
 
 
 const store = configureStore({
   reducer: {
-    personajes: personajesReducer
+    personajes: characterReducer
     //agregar el reducer de personajesFavoritos
   }
 });
@@ -13,7 +13,9 @@ const store = configureStore({
 //Hooks
 type RootState = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;
-export const useAppDispatch: () => AppDispatch = useDispatch;
+type DispatchFunc = () => AppDispatch;
+
+export const useAppDispatch: DispatchFunc = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default store;

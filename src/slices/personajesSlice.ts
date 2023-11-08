@@ -1,7 +1,7 @@
 // personajesSlice.ts
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { obtenerTodosPersonajesAPI } from "../services/personaje.services";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import Personaje from "../types/personaje.types";
+import { obtenerTodosPersonajesThunk } from './thunks';
 
 interface PersonajesState {
   status: "IDLE" | "LOADING" | "COMPLETED" | "FAILED";
@@ -15,23 +15,6 @@ const initialState: PersonajesState = {
   errorMessage: null,
 };
 
-export const obtenerTodosPersonajesThunk = createAsyncThunk(
-  "personajes/obtenerTodosPersonajesAPI",
-  async () => {
-    try {
-      const personajes: Personaje[] = await obtenerTodosPersonajesAPI();
-      return personajes;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error.message;
-      } else if (error instanceof Response && error.status === 404) {
-        throw "No se encontraron personajes";
-      } else {
-        throw "Error al obtener los personajes";
-      }
-    }
-  }
-);
 
 const personajesSlice = createSlice({
   name: "personajes",
@@ -46,12 +29,13 @@ const personajesSlice = createSlice({
         state.status = "COMPLETED";
         state.characters = action.payload;
       })
-      .addCase(obtenerTodosPersonajesThunk.rejected, (state, action: PayloadAction<string>) => {
+      .addCase(obtenerTodosPersonajesThunk.rejected, (state, action: PayloadAction<unknown>) => {
         state.status = "FAILED";
-        state.errorMessage = action.payload;
+        state.errorMessage = action.payload as string;
       });
   },
 });
 
-export default personajesSlice.reducer;
-export const { obtenerTodosPersonajesThunk } = personajesSlice.actions;
+const characterReducer = personajesSlice.reducer;
+export const characterActions = personajesSlice.actions;
+export default characterReducer;
