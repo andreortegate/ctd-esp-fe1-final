@@ -6,6 +6,7 @@ interface TarjetaPersonajeProps {
   nombre: string;
   imagenSrc: string;
   esFavorito: boolean;
+  
 }
 
 const TarjetaPersonaje: React.FC<TarjetaPersonajeProps> = ({ nombre, imagenSrc, esFavorito }) => {

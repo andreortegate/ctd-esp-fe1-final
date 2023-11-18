@@ -7,19 +7,28 @@ interface PersonajesState {
   status: "IDLE" | "LOADING" | "COMPLETED" | "FAILED";
   characters: Personaje[];
   errorMessage: string | null;
+  filtroNombre: string; 
 }
 
 const initialState: PersonajesState = {
   status: "IDLE",
   characters: [],
   errorMessage: null,
+  filtroNombre: '', // Valor inicial del filtro
 };
 
 
 const personajesSlice = createSlice({
   name: "personajes",
   initialState,
-  reducers: {},
+  reducers: {
+    setFiltroNombre: (state, action: PayloadAction<string>) => {
+      state.filtroNombre = action.payload;
+    },
+    limpiarFiltros: (state) => {
+      state.filtroNombre = '';
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(obtenerTodosPersonajesThunk.pending, (state) => {
@@ -37,5 +46,6 @@ const personajesSlice = createSlice({
 });
 
 const characterReducer = personajesSlice.reducer;
+export const { setFiltroNombre, limpiarFiltros } = personajesSlice.actions;
 export const characterActions = personajesSlice.actions;
 export default characterReducer;

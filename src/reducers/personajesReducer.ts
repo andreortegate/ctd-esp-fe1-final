@@ -12,12 +12,14 @@ export interface PersonajesState {
   status: "IDLE" | "LOADING" | "COMPLETED" | "FAILED";
   characters: Personaje[];
   errorMessage: string | null;
+ //filtroNombre: string, // Valor inicial del filtro
 }
 
 const initialState: PersonajesState = {
   status: "IDLE",
   characters: [],
-  errorMessage: null
+  errorMessage: null,
+  //filtroNombre: '', // Valor inicial del filtro
 };
 
 export const fetchCharactersThunk = createAsyncThunk(
@@ -35,7 +37,9 @@ export const fetchCharactersThunk = createAsyncThunk(
 const persojeslice = createSlice({
   name: "personajes",
   initialState,
-  reducers: {},
+  reducers: {
+ 
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchCharactersThunk.pending, (state) => {
@@ -57,5 +61,5 @@ const persojeslice = createSlice({
       );
   }
 });
-
+//export const { setFiltroNombre } = persojeslice.actions;
 export default persojeslice.reducer;

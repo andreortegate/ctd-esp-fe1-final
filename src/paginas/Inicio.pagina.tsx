@@ -1,18 +1,15 @@
-import React from 'react';
+// PaginaInicio.tsx
+import React, { useState } from 'react';
 import Filtros from '../componentes/personajes/filtros.componente';
 import GrillaPersonajes from '../componentes/personajes/grilla-personajes';
 import Paginacion from '../componentes/paginacion/paginacion.componente';
+import { useDispatch, useSelector } from 'react-redux';
+import { limpiarFiltros } from '../slices/personajesSlice';
 
-/**
- * Esta es la pagina principal. Aquí se deberá ver el panel de filtros junto con la grilla de personajes.
- * 
- * Uso: 
- * ``` <PaginaInicio /> ```
- * 
- * @returns la pagina de inicio
- */
 const PaginaInicio: React.FC = () => {
-  // Funciones de ejemplo para onAnteriorClick y onSiguienteClick
+  const dispatch = useDispatch();
+  const filtroNombre = useSelector((state: any) => state.personajes.filtroNombre);
+
   const handleAnteriorClick = () => {
     // Lógica para la acción anterior
   };
@@ -21,14 +18,15 @@ const PaginaInicio: React.FC = () => {
     // Lógica para la acción siguiente
   };
 
-  // Ejemplo de datos de favoritos, ajusta según tu lógica
-  const favoritos = [1, 2, 3];
+  const limpiarFiltrosClick = () => {
+    dispatch(limpiarFiltros());
+  };
 
   return (
     <div className="container">
       <div className="actions">
         <h3>Catálogo de Personajes</h3>
-        <button className="danger">Limpiar</button>
+        <button className="danger" onClick={limpiarFiltrosClick}>Limpiar</button>
       </div>
       <Filtros />
       <Paginacion
