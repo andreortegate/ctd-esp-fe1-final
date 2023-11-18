@@ -4,15 +4,16 @@ import './filtros.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFiltroNombre } from '../../slices/personajesSlice';
 
+<<<<<<< HEAD
+/**
+ * Componente que contiene los filtros para la búsqueda por nombre
+ * 
+ * @returns un JSX element 
+ */
 const Filtros: React.FC = () => {
-  const dispatch = useDispatch();
-  const filtroNombre = useSelector((state: any) => state.personajes.filtroNombre);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    dispatch(setFiltroNombre(query));
-  };
-
+=======
+const Filtros = () => {
+>>>>>>> 19d147378d6ad178f56081f04beb00e6ae1bec63
   return (
     <div className="filtros">
       <label htmlFor="nombre">Filtrar por nombre:</label>
@@ -26,6 +27,10 @@ const Filtros: React.FC = () => {
       />
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+};
+>>>>>>> 19d147378d6ad178f56081f04beb00e6ae1bec63
 
 export default Filtros;

@@ -2,31 +2,28 @@ import React from 'react';
 import './paginacion.css';
 
 interface PaginacionProps {
-  onAnteriorClick: () => void;
-  onSiguienteClick: () => void;
-  anteriorDisabled: boolean;
-  siguienteDisabled: boolean;
+  paginaActual: number;
+  totalPaginas: number;
+  onPaginaAnteriorClick: () => void;
+  onPaginaSiguienteClick: () => void;
 }
 
-/**
- * Componente que contiene los botones para paginar
- * 
- * Deberás agregar las propiedades necesarias para que funcione correctamente
- * 
- * 
- * @returns un JSX element 
- */
-const Paginacion: React.FC<PaginacionProps> = ({ onAnteriorClick, onSiguienteClick, anteriorDisabled, siguienteDisabled }) => {
+const Paginacion = ({
+  paginaActual,
+  totalPaginas,
+  onPaginaAnteriorClick,
+  onPaginaSiguienteClick,
+}: PaginacionProps) => {
   return (
     <div className="paginacion">
-      <button disabled={anteriorDisabled} className={"primary"} onClick={onAnteriorClick}>
+      <button disabled={paginaActual === 1} className={"primary"} onClick={onPaginaAnteriorClick}>
         Anterior
       </button>
-      <button disabled={siguienteDisabled} className={"primary"} onClick={onSiguienteClick}>
+      <button disabled={paginaActual === totalPaginas} className={"primary"} onClick={onPaginaSiguienteClick}>
         Siguiente
       </button>
     </div>
   );
-}
+};
 
 export default Paginacion;
