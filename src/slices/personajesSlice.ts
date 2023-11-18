@@ -8,6 +8,8 @@ interface PersonajesState {
   characters: Personaje[];
   errorMessage: string | null;
   filtroNombre: string; 
+  esFavorito: boolean; // Nueva propiedad
+
 }
 
 const initialState: PersonajesState = {
@@ -15,6 +17,8 @@ const initialState: PersonajesState = {
   characters: [],
   errorMessage: null,
   filtroNombre: '', // Valor inicial del filtro
+  esFavorito: false, // Valor inicial del estado de favorito
+
 };
 
 
@@ -27,6 +31,9 @@ const personajesSlice = createSlice({
     },
     limpiarFiltros: (state) => {
       state.filtroNombre = '';
+    },
+    setEsFavorito: (state, action: PayloadAction<boolean>) => {
+      state.esFavorito = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -46,6 +53,6 @@ const personajesSlice = createSlice({
 });
 
 const characterReducer = personajesSlice.reducer;
-export const { setFiltroNombre, limpiarFiltros } = personajesSlice.actions;
+export const { setFiltroNombre, limpiarFiltros, setEsFavorito } = personajesSlice.actions;
 export const characterActions = personajesSlice.actions;
 export default characterReducer;

@@ -1,17 +1,24 @@
+// tarjeta-personaje.tsx
 import React from 'react';
 import BotonFavorito from '../botones/boton-favorito.componente';
 import './tarjeta-personaje.css';
+import { useDispatch } from 'react-redux';
+import { toggleFavorito } from '../../reducers/personajesFavoritoReducer';
 
 interface TarjetaPersonajeProps {
+  id: number;
   nombre: string;
   imagenSrc: string;
   esFavorito: boolean;
-  
 }
 
-const TarjetaPersonaje: React.FC<TarjetaPersonajeProps> = ({ nombre, imagenSrc, esFavorito }) => {
+const TarjetaPersonaje: React.FC<TarjetaPersonajeProps> = ({ id, nombre, imagenSrc, esFavorito }) => {
+  const dispatch = useDispatch();
+
   const handleFavoritoClick = () => {
-    // Tu lógica de manejo de clic aquí
+    dispatch(toggleFavorito({ id, nombre, imagenSrc, esFavorito: !esFavorito }));
+        console.log('Personaje marcado como favorito:', id, nombre);
+
   };
 
   return (

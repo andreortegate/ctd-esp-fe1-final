@@ -6,6 +6,8 @@ interface Personaje {
     image: string;
     species: string;
     episode: string[];
+    esFavorito: boolean;
+
   }
   
   export default Personaje;

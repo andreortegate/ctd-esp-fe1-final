@@ -1,5 +1,7 @@
 import React from 'react';
 import './boton-favorito.css';
+import star from '../../imagenes/star.png';
+import starFilled from '../../imagenes/star-filled.png';
 
 interface BotonFavoritoProps {
   esFavorito: boolean;
@@ -15,7 +17,8 @@ interface BotonFavoritoProps {
  * @returns un JSX element 
  */
 const BotonFavorito: React.FC<BotonFavoritoProps> = ({ esFavorito, onClick }) => {
-  const src = esFavorito ? "/imagenes/star-filled.png" : "/imagenes/star.png";
+  //const src = esFavorito ? "/imagenes/star-filled.png" : "/imagenes/star.png";
+  const src = esFavorito ? starFilled : star;
 
   return (
     <div className="boton-favorito" onClick={onClick}>

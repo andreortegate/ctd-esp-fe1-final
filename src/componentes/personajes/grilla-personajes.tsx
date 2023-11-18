@@ -24,6 +24,7 @@ const GrillaPersonajes: React.FC = () => {
     <div className="grilla-personajes">
       {filteredCharacters.map((personaje: any) => (
         <TarjetaPersonaje
+        id={personaje.number}
           key={personaje.id}
           nombre={personaje.name}
           imagenSrc={personaje.image}

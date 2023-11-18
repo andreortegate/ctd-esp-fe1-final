@@ -1,12 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import characterReducer from '../slices/personajesSlice';
+import favoritosReducer from '../reducers/personajesFavoritoReducer';
 
 
 const store = configureStore({
   reducer: {
-    personajes: characterReducer
+    personajes: characterReducer,
     //agregar el reducer de personajesFavoritos
+    favoritos: favoritosReducer, // Agrega el reducer de personajesFavoritos
+
   }
 });
 
