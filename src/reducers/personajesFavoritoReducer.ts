@@ -1,6 +1,5 @@
-// favoritosSlice.ts
+// personajesFavoritoReducer.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import Personaje from "../types/personaje.types";
 
 export interface FavoritoPayload {
   id: number;
@@ -14,7 +13,7 @@ export interface PersonajesFavoritoState {
 }
 
 const initialState: PersonajesFavoritoState = {
-  favoritos: []
+  favoritos: [],
 };
 
 const personajesFavoritoSlice = createSlice({
@@ -22,27 +21,26 @@ const personajesFavoritoSlice = createSlice({
   initialState,
   reducers: {
     toggleFavorito: (state, action: PayloadAction<FavoritoPayload>) => {
-      const { id } = action.payload;
+      const { id, nombre, imagenSrc, esFavorito } = action.payload;
 
       const index = state.favoritos.findIndex((personaje) => personaje.id === id);
 
       if (index !== -1) {
         // Si el personaje ya está en favoritos, lo quitamos
         state.favoritos.splice(index, 1);
+        console.log(`Personaje desmarcado como favorito: ${nombre}`);
       } else {
         // Si el personaje no está en favoritos, lo añadimos
-        state.favoritos.push(action.payload);
+        state.favoritos.push({ id, nombre, imagenSrc, esFavorito: !esFavorito });
+        console.log(`Personaje marcado como favorito: ${nombre}`);
       }
     },
     cleanFavoritos: (state) => {
       state.favoritos = [];
-    }
-  }
+    },
+  },
 });
 
-export const {
-  toggleFavorito,
-  cleanFavoritos
-} = personajesFavoritoSlice.actions;
+export const { toggleFavorito, cleanFavoritos } = personajesFavoritoSlice.actions;
 
 export default personajesFavoritoSlice.reducer;

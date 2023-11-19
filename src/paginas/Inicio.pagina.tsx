@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { limpiarFiltros, setPaginaActual, setTotalPaginas  } from '../slices/personajesSlice';
 import store, { useAppSelector } from '../store/store';
 import { obtenerTodosPersonajesThunk } from '../slices/thunks';
+import { cleanFavoritos } from '../reducers/personajesFavoritoReducer';
 
 const PaginaInicio: React.FC = () => {
   const dispatch = useDispatch();
@@ -16,11 +17,9 @@ const PaginaInicio: React.FC = () => {
   useEffect(() => {
     const obtenerPersonajes = async () => {
       try {
-        // Aquí realiza el llamado a obtenerTodosPersonajesThunk con la nueva página
-        // y actualiza el estado con la información obtenida.
-        // Puedes acceder a `paginaActual` y `totalPaginas` directamente.
+        
         store.dispatch(obtenerTodosPersonajesThunk({ page: paginaActual, limit: 20 }));
-        // Realiza cualquier otra acción necesaria después de obtener los personajes.
+        
       } catch (error) {
         // Manejo de errores si es necesario.
       }
@@ -50,6 +49,8 @@ const PaginaInicio: React.FC = () => {
   const limpiarFiltrosClick = () => {
     dispatch(limpiarFiltros());
     console.log("Limpiar");
+    dispatch(cleanFavoritos()); // Agrega esta línea para limpiar los personajes favoritos
+    console.log("Favoritos después de limpiar:", store.getState().favoritos.favoritos); // Aquí
     dispatch(setPaginaActual(1)); // Establecer la página actual a 1 al limpiar
     console.log("Limpiar pag actual");
 
@@ -68,7 +69,7 @@ const PaginaInicio: React.FC = () => {
         anteriorDisabled={paginaActual === 1}
         siguienteDisabled={paginaActual === totalPaginas}
       />
-      <GrillaPersonajes />
+      <GrillaPersonajes esFavorito={false} personajes={[]} /> {/* Pasa esFavorito como false */}
     </div>
   );
 }

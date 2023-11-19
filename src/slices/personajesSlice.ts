@@ -44,6 +44,15 @@ const personajesSlice = createSlice({
     setTotalPaginas: (state, action: PayloadAction<number>) => {
       state.totalPaginas = action.payload;
     },
+    // Nueva acción para actualizar la propiedad esFavorito de un personaje
+    updateEsFavorito: (state, action: PayloadAction<{ id: number; esFavorito: boolean }>) => {
+      const { id, esFavorito } = action.payload;
+      state.characters = state.characters.map((personaje) => ({
+        ...personaje,
+        esFavorito: personaje.id === id ? esFavorito : personaje.esFavorito,
+      }));
+    },
+    
   },
   extraReducers: (builder) => {
     builder
@@ -52,7 +61,10 @@ const personajesSlice = createSlice({
       })
       .addCase(obtenerTodosPersonajesThunk.fulfilled, (state, action: PayloadAction<Personaje[]>) => {
         state.status = "COMPLETED";
-        state.characters = action.payload;
+        state.characters = action.payload.map((personaje) => ({
+          ...personaje,
+          esFavorito: false, // Inicialmente, ninguno es favorito
+        }));
       })
       .addCase(obtenerTodosPersonajesThunk.rejected, (state, action: PayloadAction<unknown>) => {
         state.status = "FAILED";
@@ -62,8 +74,8 @@ const personajesSlice = createSlice({
 });
 
 const characterReducer = personajesSlice.reducer;
-export const { setFiltroNombre, limpiarFiltros, setEsFavorito, setPaginaActual, setTotalPaginas,} = personajesSlice.actions;
+export const { setFiltroNombre, limpiarFiltros, setEsFavorito, setPaginaActual, setTotalPaginas, updateEsFavorito } = personajesSlice.actions;
 export const characterActions = personajesSlice.actions;
 export default characterReducer;
 
-export const {  } = personajesSlice.actions;
+

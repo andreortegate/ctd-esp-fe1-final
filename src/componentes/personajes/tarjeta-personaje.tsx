@@ -1,5 +1,5 @@
 // tarjeta-personaje.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import BotonFavorito from '../botones/boton-favorito.componente';
 import './tarjeta-personaje.css';
 import { useDispatch } from 'react-redux';
@@ -14,11 +14,12 @@ interface TarjetaPersonajeProps {
 
 const TarjetaPersonaje: React.FC<TarjetaPersonajeProps> = ({ id, nombre, imagenSrc, esFavorito }) => {
   const dispatch = useDispatch();
+  const [favoritoLocal, setFavoritoLocal] = useState(esFavorito);
 
   const handleFavoritoClick = () => {
-    dispatch(toggleFavorito({ id, nombre, imagenSrc, esFavorito: !esFavorito }));
-        console.log('Personaje marcado como favorito:', id, nombre);
-
+    setFavoritoLocal(!favoritoLocal);
+    dispatch(toggleFavorito({ id, nombre, imagenSrc, esFavorito: !favoritoLocal }));
+    console.log('Es favorito:', id, nombre);
   };
 
   return (
@@ -26,7 +27,7 @@ const TarjetaPersonaje: React.FC<TarjetaPersonajeProps> = ({ id, nombre, imagenS
       <img src={imagenSrc} alt={nombre} />
       <div className="tarjeta-personaje-body">
         <span>{nombre}</span>
-        <BotonFavorito esFavorito={esFavorito} onClick={handleFavoritoClick} />
+        <BotonFavorito esFavorito={favoritoLocal} onClick={handleFavoritoClick} />
       </div>
     </div>
   );
