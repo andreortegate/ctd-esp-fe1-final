@@ -1,15 +1,26 @@
+// thunks.ts
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Personaje from '../types/personaje.types';
 import { obtenerTodosPersonajesAPI } from '../services/personaje.services';
+import { RootState } from '../store/store';
+import { setTotalPaginas } from './personajesSlice';
 
-
+interface PaginacionParams {
+  page: number;
+  limit: number;
+}
 
 export const obtenerTodosPersonajesThunk = createAsyncThunk(
   "personajes/obtenerTodosPersonajesAPI",
-  async () => {
+  async ({ page, limit }: PaginacionParams, { getState, dispatch }) => {
     try {
-      const personajes: Personaje[] = await obtenerTodosPersonajesAPI();
-      console.log(personajes);
+      const nombreFiltro = (getState() as RootState).personajes.filtroNombre;
+      const { personajes, info } = await obtenerTodosPersonajesAPI({ page, limit }, nombreFiltro);
+
+      // Actualizar el estado de totalPaginas
+      const totalPaginas = info.pages; // Utiliza la información de la API para obtener el total de páginas
+      dispatch(setTotalPaginas(totalPaginas));
+
       return personajes;
     } catch (error) {
       if (error instanceof Error) {

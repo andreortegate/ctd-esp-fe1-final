@@ -4,29 +4,30 @@ import {
   PayloadAction,
   Reducer
 } from "@reduxjs/toolkit";
-//import { CharacterActions } from "../actions/personajesActions";
 import { obtenerTodosPersonajesAPI } from "../services/personaje.services";
 import Personaje from "../types/personaje.types";
+import { setFiltroNombre } from '../slices/personajesSlice';
+import { useDispatch } from 'react-redux';
 
 export interface PersonajesState {
   status: "IDLE" | "LOADING" | "COMPLETED" | "FAILED";
   characters: Personaje[];
   errorMessage: string | null;
- //filtroNombre: string, // Valor inicial del filtro
+  filtroNombre: string;
 }
 
 const initialState: PersonajesState = {
   status: "IDLE",
   characters: [],
   errorMessage: null,
-  //filtroNombre: '', // Valor inicial del filtro
+  filtroNombre: '',
 };
 
 export const fetchCharactersThunk = createAsyncThunk(
   "personajes/fetchThunk",
   async (query: string) => {
     try {
-      const personajes: Personaje[] = await obtenerTodosPersonajesAPI(query);
+      const { personajes } = await obtenerTodosPersonajesAPI({ page: 1, limit: 20 }, query);
       return personajes;
     } catch (e) {
       return e;
@@ -34,12 +35,10 @@ export const fetchCharactersThunk = createAsyncThunk(
   }
 );
 
-const persojeslice = createSlice({
+const personajesSlice = createSlice({
   name: "personajes",
   initialState,
-  reducers: {
- 
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchCharactersThunk.pending, (state) => {
@@ -49,6 +48,7 @@ const persojeslice = createSlice({
         fetchCharactersThunk.fulfilled,
         (state, action: PayloadAction<Personaje[] | any>) => {
           state.status = "COMPLETED";
+          // Ahora extraes los personajes del objeto que devuelve la API
           state.characters = action.payload;
         }
       )
@@ -59,7 +59,8 @@ const persojeslice = createSlice({
           state.errorMessage = action.payload;
         }
       );
-  }
+  },
 });
-//export const { setFiltroNombre } = persojeslice.actions;
-export default persojeslice.reducer;
+
+//export const { setFiltroNombre } = personajesSlice.actions;
+export default personajesSlice.reducer;

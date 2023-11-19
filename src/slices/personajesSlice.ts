@@ -9,6 +9,8 @@ interface PersonajesState {
   errorMessage: string | null;
   filtroNombre: string; 
   esFavorito: boolean; // Nueva propiedad
+  paginaActual: number;
+  totalPaginas: number;
 
 }
 
@@ -18,7 +20,8 @@ const initialState: PersonajesState = {
   errorMessage: null,
   filtroNombre: '', // Valor inicial del filtro
   esFavorito: false, // Valor inicial del estado de favorito
-
+  paginaActual: 1,
+  totalPaginas: 1,
 };
 
 
@@ -34,6 +37,12 @@ const personajesSlice = createSlice({
     },
     setEsFavorito: (state, action: PayloadAction<boolean>) => {
       state.esFavorito = action.payload;
+    },
+    setPaginaActual: (state, action: PayloadAction<number>) => {
+      state.paginaActual = action.payload;
+    },
+    setTotalPaginas: (state, action: PayloadAction<number>) => {
+      state.totalPaginas = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -53,6 +62,8 @@ const personajesSlice = createSlice({
 });
 
 const characterReducer = personajesSlice.reducer;
-export const { setFiltroNombre, limpiarFiltros, setEsFavorito } = personajesSlice.actions;
+export const { setFiltroNombre, limpiarFiltros, setEsFavorito, setPaginaActual, setTotalPaginas,} = personajesSlice.actions;
 export const characterActions = personajesSlice.actions;
 export default characterReducer;
+
+export const {  } = personajesSlice.actions;
